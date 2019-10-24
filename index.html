@@ -16,7 +16,29 @@
 	  .then(function(response) {
 	    response.json()
 		.then(function(data) {
-	    console.log('Request successful');result_MDPH=data;
+	    console.log('Request successful');
+		    result_MDPH=data;
+		    
+		    // Réccupérer MDPH :
+		    var dep = "01 - Ain";
+		    var nom= new Array;
+		    var adresse= new Array;
+		    var commune= new Array;
+		    var cp= new Array;
+		    var lien= new Array;
+		    
+		    for (i=0;i<result_MDPH.results.length;i++){
+			    if (result_MDPH.results[i]["departement"] == dep) {
+				    nom.push(result_MDPH.results[i]["nom"]);
+				    adresse.push(result_MDPH.results[i]["adresse"]);
+				    commune.push(result_MDPH.results[i]["commune"]);
+				    cp.push(result_MDPH.results[i]["cp"]);
+				    lien.push(result_MDPH.results[i]["lien_site_onisepfr"])
+			    }
+		    };
+		    
+		    	    
+		    
 	  })})
 		result_MDPH;
 
