@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>PROJET API</title>
+	</head>
+	<body>
+	<script>
+	var result
+	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e1376b0f7fb/search?size=10')
+	.then(function(response) {
+    response.json()
+  	.then(function(data) {
+    console.log('Request successful'); result=data;
+	})})
+	result
+	</script>
+	</body>
+</html>
