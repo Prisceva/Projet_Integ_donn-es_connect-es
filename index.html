@@ -8,15 +8,32 @@
 	<script>
 	
 	#API MDPH
-
-	var result
-	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e1376b0f7fb/search?size=10')
-	.then(function(response) {
+	MDPH:
+fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?q=1&size=25')
+  .then(function(response) {
     response.json()
   	.then(function(data) {
     console.log('Request successful'); result=data;
-	})})
-	result
+  })})
+
+	#API ULIS
+	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13d4faa63e/search?size=1000&facet.region=Occitanie')
+  .then(function(response) {
+    response.json()
+  	.then(function(data) {
+    console.log('Request successful'); result=data;
+  })})
+	
+	#API Associations
+	Assos: 
+fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e1376b0f7fb/search?size=100')
+  .then(function(response) {
+    response.json()
+  	.then(function(data) {
+    console.log('Request successful'); result=data;
+  })})
+	
+	
 	</script>
 	</body>
 </html>
