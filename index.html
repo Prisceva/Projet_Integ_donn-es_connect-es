@@ -5,7 +5,7 @@
 		<title>PROJET API</title>
 	</head>
 	<body>
-		<p>test 2 </p>
+		<p>test 3 </p>
 		
 	</body>
 	<script>
@@ -31,14 +31,14 @@
 	result_ULIS;
 		
 	//API Associations
-	var resul_Assos ;
+	var result_Assos ;
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e1376b0f7fb/search?size=100')
 	  .then(function(response) {
 	    response.json()
 		.then(function(data) {
-	    console.log('Request successful'); resul_Assos=data;
+	    console.log('Request successful'); result_Assos=data;
 	  })})
-	resul_Assos;
+	result_Assos;
 	
 	</script>
 	
