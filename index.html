@@ -10,16 +10,17 @@
 	</body>
 	<script>
 	
-	#API MDPH
+	//API MDPH
 	var result_MDPH
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?q=1&size=25')
 	  .then(function(response) {
 	    response.json()
 		.then(function(data) {
-	    console.log('Request successful'); result=data;
+	    console.log('Request successful');result=data;
 	  })})
+		result
 
-	#API ULIS
+	//API ULIS
 	var result_ULIS
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13d4faa63e/search?size=1000&facet.region=Occitanie')
 	  .then(function(response) {
@@ -28,7 +29,7 @@
 	    console.log('Request successful'); result=data;
 	  })})
 	
-	#API Associations
+	//API Associations
 	var resul_Assos 
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e1376b0f7fb/search?size=100')
 	  .then(function(response) {
