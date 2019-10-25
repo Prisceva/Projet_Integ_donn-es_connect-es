@@ -14,6 +14,11 @@
 	</body>
 	<script>
 	
+	function retrouverVarDep(){
+		console.log(document.getElementById("dep").value);
+	}
+	
+	
 	//API MDPH
 	var result_MDPH;
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
