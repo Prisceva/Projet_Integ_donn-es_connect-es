@@ -10,17 +10,41 @@
 	
 		<select id="dep">
 		</select>
+		
+	<SELECT name="handicap" id="handicap"> 
+	<OPTION VALUE="visuel">Visuel</OPTION> 
+	<OPTION VALUE="cognitif">Cognitif/Intellectuel</OPTION> 
+	<OPTION VALUE="auditif">Auditif</OPTION> 
+	<OPTION VALUE="moteur">Moteur</OPTION> 
+	<OPTION VALUE="autiste">Autiste</OPTION> 
+	<OPTION VALUE="sante">Santé</OPTION>
+	<OPTION VALUE="apprentissage">Apprentissage</OPTION>
+	<OPTION VALUE="multiple">Multiple</OPTION>
+	</SELECT>
+		
 		<button type="button" onclick="retrouverVarDep()">rechercher</button>
 				
     <table id = "tab_MDPH">
     </table>
+    
+    <table id="tab_asso">
+	</table>
+	
+	
 		
 	</body>
 	<script>
 
 	function retrouverVarDep(){
-		//console.log(document.getElementById("dep").value);
+	
+	console.log(document.getElementById("handicap").value);
+	console.log(document.getElementById("dep").value);
+	
     var dep= document.getElementById("dep").value;
+    var handicap = document.getElementById("handicap").value;
+
+     // Fleur met tout le code ici le renomage + fonction fetch suivie du "récupéré Assos : "
+
     //API MDPH
 	var result_MDPH;
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
