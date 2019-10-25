@@ -5,15 +5,23 @@
 		<title>PROJET API</title>
 	</head>
 	<body>
-		<p>test 7 </p>
-		<table id = "tab_MDPH">
-       	</table>
+
+		<p>test final </p>
+	
+		<select id="dep">
+		</select>
+		<button type="button" onclick="retrouverVarDep()">rechercher</button>
+				
+    <table id = "tab_MDPH">
+    </table>
 		
 	</body>
 	<script>
-	
-	var dep= document.getElementById("dep").value;
-	//API MDPH
+
+	function retrouverVarDep(){
+		//console.log(document.getElementById("dep").value);
+    var dep= document.getElementById("dep").value;
+    //API MDPH
 	var result_MDPH;
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
 	  .then(function(response) {
@@ -21,8 +29,6 @@
 		.then(function(data) {
 	    console.log('Request successful');
 		    result_MDPH=data;
-		    
-		    // Réccupérer MDPH :
 		    var nom= new Array;
 		    var adresse= new Array;
 		    var commune= new Array;
@@ -49,10 +55,49 @@
 		    }
 		    //console.log(text);
 		    var donnee_MDPH = document.getElementById("tab_MDPH");
-		    donnee_MDPH.innerHTML=text;  	    
-		    
+		    donnee_MDPH.innerHTML=text; 
+	
+          })})
+		
+		result_MDPH;
+  }
+	
+	
+
+   //API MDPH
+	var result_MDPH;
+	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
+	  .then(function(response) {
+	    response.json()
+		.then(function(data) {
+	    console.log('Request successful');
+		result_MDPH=data;
+		//api 'premise' si on veut sortir du fetch
+		var tout_dep=[];
+		for(i in result_MDPH.results){
+			//console.log(result_MDPH.results[i]["departement"]);
+			tout_dep.push(result_MDPH.results[i]["departement"]);
+		}
+		//console.log(tout_dep);
+		//fonction pour supprimer les doublons des departements.
+		const unique = (value, index, self) => {
+			return self.indexOf(value) === index
+		}
+		const uniqueDep=tout_dep.filter(unique);
+		console.log(uniqueDep);//liste unique avec les 101 dep francais
+		
+		uniqueDep.sort();//tri en ordre croissant la liste des departements
+		
+		var mesOptions = "";
+		for(i in uniqueDep){
+			mesOptions=mesOptions+"<option value='"+uniqueDep[i]+"'>"+uniqueDep[i]+"</option>";
+			//console.log(uniqueDep[i]);
+		} 
+		var monDep = document.getElementById("dep");
+		monDep.innerHTML = mesOptions;
+		
 			
-			
+		
 	  })})
 		
 		result_MDPH;
