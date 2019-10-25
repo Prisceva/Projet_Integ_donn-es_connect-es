@@ -5,12 +5,14 @@
 		<title>PROJET API</title>
 	</head>
 	<body>
-		<p>test 5 </p>
+		<p>test 7 </p>
 		<table id = "tab_MDPH">
-       		</table>
+       	</table>
+		
 	</body>
 	<script>
 	
+	var dep= document.getElementById("dep").value;
 	//API MDPH
 	var result_MDPH;
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
@@ -21,7 +23,6 @@
 		    result_MDPH=data;
 		    
 		    // Réccupérer MDPH :
-		    
 		    var nom= new Array;
 		    var adresse= new Array;
 		    var commune= new Array;
@@ -50,29 +51,12 @@
 		    var donnee_MDPH = document.getElementById("tab_MDPH");
 		    donnee_MDPH.innerHTML=text;  	    
 		    
+			
+			
 	  })})
 		
 		result_MDPH;
-
-	//API ULIS
-	var result_ULIS;
-	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13d4faa63e/search?size=1000&facet.region=Occitanie')
-	  .then(function(response) {
-	    response.json()
-		.then(function(data) {
-	    console.log('Request successful'); result_ULIS=data;
-	  })})
-	result_ULIS;
 		
-	//API Associations
-	var result_Assos ;
-	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e1376b0f7fb/search?size=100')
-	  .then(function(response) {
-	    response.json()
-		.then(function(data) {
-	    console.log('Request successful'); result_Assos=data;
-	  })})
-	result_Assos;
 	
 	</script>
 	
