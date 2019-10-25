@@ -5,21 +5,66 @@
 		<title>PROJET API</title>
 	</head>
 	<body>
-		<p>test 57 </p>
+
+		<p>test final </p>
+	
 		<select id="dep">
 		</select>
 		<button type="button" onclick="retrouverVarDep()">rechercher</button>
 				
+    <table id = "tab_MDPH">
+    </table>
 		
 	</body>
 	<script>
-	
+
 	function retrouverVarDep(){
-		console.log(document.getElementById("dep").value);
-	}
+		//console.log(document.getElementById("dep").value);
+    var dep= document.getElementById("dep").value;
+    //API MDPH
+	var result_MDPH;
+	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
+	  .then(function(response) {
+	    response.json()
+		.then(function(data) {
+	    console.log('Request successful');
+		    result_MDPH=data;
+		    var nom= new Array;
+		    var adresse= new Array;
+		    var commune= new Array;
+		    var cp= new Array;
+		    var lien= new Array;
+		    
+		    for (i=0;i<result_MDPH.results.length;i++){
+			    if (result_MDPH.results[i]["departement"] == dep) {
+				    nom.push(result_MDPH.results[i]["nom"]);
+				    adresse.push(result_MDPH.results[i]["adresse"]);
+				    commune.push(result_MDPH.results[i]["commune"]);
+				    cp.push(result_MDPH.results[i]["cp"]);
+				    lien.push(result_MDPH.results[i]["lien_site_onisepfr"])
+			    }
+		    };
+		    
+		    var text="";
+		    // On défini les en tetes :
+		    text = text + "<tr><th>Nom</th><th>Adresse</th><th>Code Postal</th><th>Commune</th><th>Site web</th></tr>";
+		    
+		    for (i in nom){ // Pour chaque département.
+			   //console.log(nom[i]);
+			    text = text + "<tr><td>"+nom[i]+"</td><td>"+adresse[i]+"</td><td>"+cp[i]+"</td><td>"+commune[i]+"</td><td>"+lien[i]+"</td></tr>"; 
+		    }
+		    //console.log(text);
+		    var donnee_MDPH = document.getElementById("tab_MDPH");
+		    donnee_MDPH.innerHTML=text; 
+	
+          })})
+		
+		result_MDPH;
+  }
 	
 	
-	//API MDPH
+
+   //API MDPH
 	var result_MDPH;
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
 	  .then(function(response) {
@@ -54,27 +99,9 @@
 			
 		
 	  })})
-		result_MDPH;
-
-	//API ULIS
-	var result_ULIS;
-	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13d4faa63e/search?size=1000&facet.region=Occitanie')
-	  .then(function(response) {
-	    response.json()
-		.then(function(data) {
-	    console.log('Request successful'); result_ULIS=data;
-	  })})
-	result_ULIS;
 		
-	//API Associations
-	var result_Assos ;
-	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e1376b0f7fb/search?size=100')
-	  .then(function(response) {
-	    response.json()
-		.then(function(data) {
-	    console.log('Request successful'); result_Assos=data;
-	  })})
-	result_Assos;
+		result_MDPH;
+		
 	
 	</script>
 	
