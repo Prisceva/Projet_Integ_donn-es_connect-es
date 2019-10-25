@@ -5,8 +5,9 @@
 		<title>PROJET API</title>
 	</head>
 	<body>
-		<p>test 4 </p>
-		
+		<p>test 5 </p>
+		<table id = "tab_MDPH">
+       		</table>
 	</body>
 	<script>
 	
@@ -37,9 +38,20 @@
 			    }
 		    };
 		    
-		    	    
+		    var text="";
+		    // On défini les en tetes :
+		    text = text + "<tr><th>Nom</th><th>Adresse</th><th>Code Postal</th><th>Commune</th><th>Site web</th></tr>";
+		    
+		    for (i in nom){ // Pour chaque département.
+			   //console.log(nom[i]);
+			    text = text + "<tr><td>"+nom[i]+"</td><td>"+adresse[i]+"</td><td>"+cp[i]+"</td><td>"+commune[i]+"</td><td>"+lien[i]+"</td></tr>"; 
+		    }
+		    //console.log(text);
+		    var donnee_MDPH = document.getElementById("tab_MDPH");
+		    donnee_MDPH.innerHTML=text;  	    
 		    
 	  })})
+		
 		result_MDPH;
 
 	//API ULIS
