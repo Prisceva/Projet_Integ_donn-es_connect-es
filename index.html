@@ -63,8 +63,28 @@
 	    response.json()
 		.then(function(data) {
 	    console.log('Request successful'); result_ULIS=data;
+		    // recuperer les ulyss
+
+		    var dep= "01 - Ain";
+		    var handicap= "trouble de la santé"
+		    var nom_u = new Array;
+		    var commune_u= new Array;
+		    var type_detablissement= new Array;
+		    
+		    
+		    for (i=0;i<result_ULIS.results.length;i++){
+			    if (result_UlIS.results[i]["type_handicap_principal"] == "troubles de la santé" && result_Ulis.results[i]["departement"]=="Paris") {
+				    nom_u.push(result_ULIS.results[i]["nom"]);
+				    commune.push(result_ULIS.results[i]["commune"]);
+				    type_etablie.push(result_ULIS.results[i]["type_detablissement"])
+				    <!-- rajouter peut etre adresse-->
+			    }
+		    };
+
 	  })})
 	result_ULIS;
+		
+		
 		
 	//API Associations
 	var result_Assos ;
