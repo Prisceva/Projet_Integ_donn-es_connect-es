@@ -5,7 +5,11 @@
 		<title>PROJET API</title>
 	</head>
 	<body>
-		<p>test 4 </p>
+		<p>test 6 </p>
+		<select id="dep">
+		</select>
+		<button type="button" onclick="retrouverVarDep()">rechercher</button>
+				
 		
 	</body>
 	<script>
@@ -16,7 +20,34 @@
 	  .then(function(response) {
 	    response.json()
 		.then(function(data) {
-	    console.log('Request successful');result_MDPH=data;
+	    console.log('Request successful');
+		result_MDPH=data;
+		//api 'premise' si on veut sortir du fetch
+		var tout_dep=[];
+		for(i in result_MDPH.results){
+			//console.log(result_MDPH.results[i]["departement"]);
+			tout_dep.push(result_MDPH.results[i]["departement"]);
+		}
+		//console.log(tout_dep);
+		//fonction pour supprimer les doublons des departements.
+		const unique = (value, index, self) => {
+			return self.indexOf(value) === index
+		}
+		const uniqueDep=tout_dep.filter(unique);
+		console.log(uniqueDep);//liste unique avec les 101 dep francais
+		
+		uniqueDep.sort();//tri en ordre croissant la liste des departements
+		
+		var mesOptions = "";
+		for(i in uniqueDep){
+			mesOptions=mesOptions+"<option value="+uniqueDep[i]+">"+uniqueDep[i]+"</option>";
+			//console.log(uniqueDep[i]);
+		} 
+		var monDep = document.getElementById("dep");
+		monDep.innerHTML = mesOptions;
+		
+			
+		
 	  })})
 		result_MDPH;
 
