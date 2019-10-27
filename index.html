@@ -29,10 +29,10 @@
     
     <table id="tab_asso">
 	</table>
-	
-	
-		
+			
 	</body>
+	<script type="text/javascript" src="Requete_asso.js"></script>
+	
 	<script>
 
 	function retrouverVarDep(){
@@ -42,9 +42,54 @@
 	
     var dep= document.getElementById("dep").value;
     var handicap = document.getElementById("handicap").value;
+	
+	var handicap_asso=""
+	var handicap_ulis=""
 
-     // Fleur met tout le code ici le renomage + fonction fetch suivie du "récupéré Assos : "
+	if (handicap =="visuel") {
+		handicap_asso="handicap visuel";
+		handicap_ulis="TFV : troubles de la fonction visuelle";
+		}; 
+		
+	if (handicap == "cognitif / intellectuel") {
+		handicap_asso="troubles cognitifs / déficience intellectuelle";
+		handicap_ulis="TFC : troubles des fonctions cognitives ou mentales";
+	};
 
+	if (handicap == "auditif") {
+		handicap_asso="handicap auditif";
+		handicap_ulis="TFA : troubles de la fonction auditive";
+	} ;
+
+	if (handicap == "moteur") {
+		handicap_asso="handicap moteur";
+		handicap_ulis="TFM : troubles des fonctions motrices";
+	};
+
+	if (handicap == "autisme") {
+		handicap_asso="troubles du développement (autisme)";
+		handicap_ulis="TED : troubles envahissants du développement (dont l'autisme)";
+	};
+
+	if (handicap == "santé") {
+		handicap_asso="troubles de la santé";
+		handicap_ulis="";
+	};
+
+	if (handicap == "apprentissages") {
+		handicap_asso="troubles des apprentissages";
+		handicap_ulis="troubles spécifiques du langage et des apprentissages";
+	};
+
+	if (handicap == "multiple") {
+		handicap_asso="tous types de handicaps";
+		handicap_ulis="TMA : troubles multiples associés";
+	}; 
+
+	if (handicap== "") {
+		console.log("pas de trouble")
+	};
+	
     //API MDPH
 	var result_MDPH;
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
@@ -84,10 +129,15 @@
           })})
 		
 		result_MDPH;
+		
+		
+		
+		
+		BuildResultAsso("tab_asso",handicap_asso,dep);
+		
   }
 	
 	
-
    //API MDPH
 	var result_MDPH;
 	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13aa4a3cee/search?size=300')
