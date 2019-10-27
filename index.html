@@ -134,6 +134,51 @@
 		result_MDPH;
 		
 		BuildResultAsso("tab_asso",handicap_asso,dep);
+		
+		//API REGION
+		  //recupere le code region celon le departement.
+		  console.log(dep.substring(0, 2));//on prend le code departement juste les deux chiffre donc on faite une sous chaine de carateres
+		  var dep_temporaire=dep.substring(0, 2);//variable dep avec deux chiffre pour recherche
+		  var result_Region;
+		  fetch('https://geo.api.gouv.fr/departements/'+dep_temporaire+'?fields=nom,code,codeRegion,region')
+		  .then(function(response) {//on recupere le code region selon son code departement
+			response.json()
+			.then(function(data) {
+				console.log('Request successful REGION');
+				result_Region=data;
+				console.log(result_Region.codeRegion);//le code region renvoyer du departement (correspond a ceux de la API ULIS)
+				console.log(result_Region.region["nom"]);
+				var nomRegion=result_Region.region["nom"];
+				/*
+					API ULIS : RECHERCHE etablissement
+				*/
+				var result_ULIS;
+				fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13d4faa63e/search?size=1000&facet.region='+nomRegion)
+				.then(function(response) {
+					response.json()
+					.then(function(data) {
+						console.log('Request successful ULIS'); 
+						result_ULIS=data;
+						console.log(nomRegion);
+						console.log(result_ULIS.results);
+						/*
+						ATTENTION ON PARLE DE 841 RESULTATS EN OCCITANIE (ne pas tout afficher les gars): NE PAS TOUT AFFICHER
+						RESTE A FAIRE ICI:
+						faire une boucle 'for' qui parcours tous les résultats{
+							SI ( type_handicap_principal == handicap ){
+								FAIRE TABLEAU DE RESULTAT
+							}
+						}
+						 
+						*/
+				})})
+				result_ULIS;
+		
+		})})
+		result_Region
+		
+		
+		
   }
 	
 	
