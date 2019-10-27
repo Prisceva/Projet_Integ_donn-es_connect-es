@@ -1,6 +1,8 @@
 # Projet_Integ_donnees_connectees
 Integration de données connectées : Groupe de Sarah, Michail, Fleur, Gaëlle, Priscille
 
+Lien vers le site : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/switch
+
 Objectif :
 Faciliter la vie et la socialisation des personnes atteintes de handicap.
 Pour cela, nous allons proposer un site permettant aux personnes porteuses de handicap de trouver les associations et
