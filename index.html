@@ -18,7 +18,7 @@
 	<OPTION VALUE="moteur">Moteur</OPTION> 
 	<OPTION VALUE="autiste">Autiste</OPTION> 
 	<OPTION VALUE="sante">Santé</OPTION>
-	<OPTION VALUE="apprentissage">Apprentissage</OPTION>
+	<OPTION VALUE="apprentissages">Apprentissage</OPTION>
 	<OPTION VALUE="multiple">Multiple</OPTION>
 	</SELECT>
 		
@@ -30,7 +30,8 @@
     <table id="tab_asso">
 	</table>
 	
-	
+	<table id = "tableau_ULIS">
+    </table>
 		
 	</body>
 	<script type="text/javascript" src="RequeteAsso.js"></script>
@@ -53,7 +54,7 @@
 		handicap_ulis="TFV : troubles de la fonction visuelle";
 		}; 
 		
-	if (handicap == "cognitif / intellectuel") {
+	if (handicap == "cognitif") {
 		handicap_asso="troubles cognitifs / déficience intellectuelle";
 		handicap_ulis="TFC : troubles des fonctions cognitives ou mentales";
 	};
@@ -68,12 +69,12 @@
 		handicap_ulis="TFM : troubles des fonctions motrices";
 	};
 
-	if (handicap == "autisme") {
+	if (handicap == "autiste") {
 		handicap_asso="troubles du développement (autisme)";
 		handicap_ulis="TED : troubles envahissants du développement (dont l'autisme)";
 	};
 
-	if (handicap == "santé") {
+	if (handicap == "sante") {
 		handicap_asso="troubles de la santé";
 		handicap_ulis="";
 	};
@@ -160,22 +161,47 @@
 						console.log('Request successful ULIS'); 
 						result_ULIS=data;
 						console.log(nomRegion);
-						console.log(result_ULIS.results);
-						/*
-						ATTENTION ON PARLE DE 841 RESULTATS EN OCCITANIE (ne pas tout afficher les gars): NE PAS TOUT AFFICHER
-						RESTE A FAIRE ICI:
-						faire une boucle 'for' qui parcours tous les résultats{
-							SI ( type_handicap_principal == handicap ){
-								FAIRE TABLEAU DE RESULTAT
-							}
-						}
-						 
-						*/
-				})})
-				result_ULIS;
+						
+			//Définition des variables 			
+				var nom_ULIS = new Array;
+				var adresse_ULIS = new Array;
+				var commune_ULIS = new Array;
+				var CodePostal_ULIS = new Array;
+				var typeEtablissement_ULIS = new Array;	
+				var titre = "";
+				var controle = true;
+	
+			//Récupère le résultat 
+			for (i = 0; i < result_ULIS.results.length; i++){
+				if (result_ULIS.results[i]["type_handicap_principal"] == handicap_ulis && result_ULIS.results[i]["departement"] == dep){
+					nom_ULIS.push(result_ULIS.results[i]["nom"]);
+					adresse_ULIS.push(result_ULIS.results[i]["adresse"]);
+					commune_ULIS.push(result_ULIS.results[i]["commune"]);
+					typeEtablissement_ULIS.push(result_ULIS.results[i]["type_detablissement"]);
+					CodePostal_ULIS.push(result_ULIS.results[i]["cp"]);
+				}		
+			}	
+		
+			//Création du tableau 
+			var tableau = "";
+			titre += "ÉTABLISSEMENT DANS VOTRE DÉPARTEMENT "; 
+			tableau +=titre;
+			tableau += "<tr><th>Nom</th><th>Type d'établissement</th><th>Adresse</th><th>Commune</th><th>Code Postal</th></tr>";
+		
+			for (i = 0; i < nom_ULIS.length; i++){
+			tableau += "<tr><td>"+nom_ULIS[i]+"</td><td>"+typeEtablissement_ULIS[i]+"</td><td>"+adresse_ULIS[i]+"</td><td>"+commune_ULIS[i]+"</td><td>"+CodePostal_ULIS[i]+"</td></tr>";
+			}
+		
+			// Ajustement HTML
+			var tableauHTML = document.getElementById("tableau_ULIS");
+			tableauHTML.innerHTML=tableau;
+		
+				
+		})})
+		result_ULIS;
 		
 		})})
-		result_Region
+		result_Region;
 		
 		
 		
