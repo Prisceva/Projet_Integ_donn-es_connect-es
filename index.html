@@ -11,30 +11,31 @@
 		<select id="dep">
 		</select>
 		
-		<SELECT name="handicap" id="handicap"> 
-		<OPTION VALUE="visuel">Visuel</OPTION> 
-		<OPTION VALUE="cognitif">Cognitif/Intellectuel</OPTION> 
-		<OPTION VALUE="auditif">Auditif</OPTION> 
-		<OPTION VALUE="moteur">Moteur</OPTION> 
-		<OPTION VALUE="autiste">Autiste</OPTION> 
-		<OPTION VALUE="sante">Santé</OPTION>
-		<OPTION VALUE="apprentissage">Apprentissage</OPTION>
-		<OPTION VALUE="multiple">Multiple</OPTION>
-		</SELECT>
+	<SELECT name="handicap" id="handicap"> 
+	<OPTION VALUE="visuel">Visuel</OPTION> 
+	<OPTION VALUE="cognitif">Cognitif/Intellectuel</OPTION> 
+	<OPTION VALUE="auditif">Auditif</OPTION> 
+	<OPTION VALUE="moteur">Moteur</OPTION> 
+	<OPTION VALUE="autiste">Autiste</OPTION> 
+	<OPTION VALUE="sante">Santé</OPTION>
+	<OPTION VALUE="apprentissages">Apprentissage</OPTION>
+	<OPTION VALUE="multiple">Multiple</OPTION>
+	</SELECT>
 		
 		<button type="button" onclick="retrouverVarDep()">rechercher</button>
-		
-		<h1>MDPH DANS VOTRE REGION </h1>	<!-- Le temps de faire le visuel --!>	
-    	<table id = "tab_MDPH">
-    	</table>
+				
+    <table id = "tab_MDPH">
+    </table>
     
-    	<h1>ASSOS </h1> 					<!-- Le temps de faire le visuel --!>
-    	<table id="tab_asso">
-		</table>
+    <table id="tab_asso">
+	</table>
 	
-	
+	<table id = "tableau_ULIS">
+    </table>
 		
 	</body>
+	<script type="text/javascript" src="RequeteAsso.js"></script>
+	
 	<script>
 
 	function retrouverVarDep(){
@@ -45,16 +46,15 @@
     var dep= document.getElementById("dep").value;
     var handicap = document.getElementById("handicap").value;
 
-     // Fleur met tout le code ici le renomage + fonction fetch suivie du "récupéré Assos : "
-	var handicap_asso=""
+    var handicap_asso=""
 	var handicap_ulis=""
 
 	if (handicap =="visuel") {
 		handicap_asso="handicap visuel";
 		handicap_ulis="TFV : troubles de la fonction visuelle";
-	}; 
-	
-	if (handicap == "cognitif / intellectuel") {
+		}; 
+		
+	if (handicap == "cognitif") {
 		handicap_asso="troubles cognitifs / déficience intellectuelle";
 		handicap_ulis="TFC : troubles des fonctions cognitives ou mentales";
 	};
@@ -69,12 +69,12 @@
 		handicap_ulis="TFM : troubles des fonctions motrices";
 	};
 
-	if (handicap == "autisme") {
+	if (handicap == "autiste") {
 		handicap_asso="troubles du développement (autisme)";
 		handicap_ulis="TED : troubles envahissants du développement (dont l'autisme)";
 	};
 
-	if (handicap == "santé") {
+	if (handicap == "sante") {
 		handicap_asso="troubles de la santé";
 		handicap_ulis="";
 	};
@@ -92,82 +92,6 @@
 	if (handicap== "") {
 		console.log("pas de trouble")
 	};
-	
-	
-	//API ULIS
-	var result_ULIS;
-	var region = "Occitanie" 
-	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13d4faa63e/search?size=1000&facet.region=Occitanie')
-	  .then(function(response) {
-	    response.json()
-		.then(function(data) {
-	    console.log('ok'); 
-	result_ULIS=data;
-	
-	var nom_ULIS = new Array;
-	var adresse_ULIS = new Array;
-	var commune_ULIS = new Array;
-	var CodePostal_ULIS = new Array;
-	
-		//Récupère le résultat 
-	for (i in result_ULIS){
-		if (result_ULIS.results[i]["type_handicap_principal"] == handicap_ulis && result_ULIS.results[i]["departement"] == dep){
-		nom_ULIS.push(result_ULIS.results[i]["nom"]);
-		adresse_ULIS.push(result_ULIS.results[i]["adresse"]);
-		commune_ULIS.push(result_ULIS.results[i]["commune"]);
-		CodePostal_ULIS.push(result_ULIS.results[i]["cp"]);
-		
-		}
-	};
-	
-	// Création du tableau ULIS 
-	var tableau = "";
-	var titre = "<table> <tr> <th>Nom</th> <th>Adresse</th> <th>Code Postal</th> <th>Commune</th> </tr>";
-	tableau += titre;
-		    
-	for (i in nom_ULIS){ 
-		var ligne = "<tr> <td>"+nom_ULIS[i]+"</td> <td>"+adresse_ULIS[i]+"</td> <td>"+CodePostal_ULIS[i]+"</td> <td>"+commune_ULIS[i]+"</td> </tr>";
-		tableau += ligne; 
-	}
-	tableau += "</table>";
-	
-	// Ajout dans le HTML 
-	var tableau_ULIS = document.getElementById("tableau_ULIS");
-	tableau_ULIS.innerHTML=tableau; 
-	
-	
-	  })})
-	result_ULIS;
-
-
-
-	// Api Assos  
-	var result_Assos ;
-		fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e1376b0f7fb/search?size=100')
-		  .then(function(response) {
-			response.json()
-			.then(function(data) {
-			console.log('Request successful'); 
-				result_Assos=data;
-				
-				  // Récupérer Assos :
-				var nom_asso= new Array;
-				var commune_asso= new Array;
-				var lien_asso= new Array;
-				var text_asso="";
-				text_asso = text_asso + "<tr><th>Nom</th><th>Commune</th><th>Site web</th></tr>";
-				
-				for (i = 0; i < result_Assos.results.length; i++) {
-					if (result_Assos.results[i]["departement"] ==dep && result_Assos.results[i]["handicap_principal"] ==handicap_asso) {
-						nom_asso.push(result_Assos.results[i]["nom"]);
-						commune_asso.push(result_Assos.results[i]["commune"]);
-						lien_asso.push(result_Assos.results[i]["lien_site_onisepfr"]);
-						text_asso=text_asso+ "<tr>"+"<td>"+result_Assos.results[i]["nom"]+"</td>" + "<td>"+result_Assos.results[i]["commune"]+"</td>" +"<td>"+result_Assos.results[i]["lien_site_onisepfr"]+"</td>" +"</tr>";
-					}
-				};
-				var associations = document.getElementById("tab_asso");
-				associations.innerHTML=text_asso;			
-		  })})
 
 
     //API MDPH
@@ -209,6 +133,78 @@
           })})
 		
 		result_MDPH;
+		
+		BuildResultAsso("tab_asso",handicap_asso,dep);
+		
+		//API REGION
+		  //recupere le code region celon le departement.
+		  console.log(dep.substring(0, 2));//on prend le code departement juste les deux chiffre donc on faite une sous chaine de carateres
+		  var dep_temporaire=dep.substring(0, 2);//variable dep avec deux chiffre pour recherche
+		  var result_Region;
+		  fetch('https://geo.api.gouv.fr/departements/'+dep_temporaire+'?fields=nom,code,codeRegion,region')
+		  .then(function(response) {//on recupere le code region selon son code departement
+			response.json()
+			.then(function(data) {
+				console.log('Request successful REGION');
+				result_Region=data;
+				console.log(result_Region.codeRegion);//le code region renvoyer du departement (correspond a ceux de la API ULIS)
+				console.log(result_Region.region["nom"]);
+				var nomRegion=result_Region.region["nom"];
+				/*
+					API ULIS : RECHERCHE etablissement
+				*/
+				var result_ULIS;
+				fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13d4faa63e/search?size=1000&facet.region='+nomRegion)
+				.then(function(response) {
+					response.json()
+					.then(function(data) {
+						console.log('Request successful ULIS'); 
+						result_ULIS=data;
+						console.log(nomRegion);
+						
+			//Définition des variables 			
+				var nom_ULIS = new Array;
+				var adresse_ULIS = new Array;
+				var commune_ULIS = new Array;
+				var CodePostal_ULIS = new Array;
+				var typeEtablissement_ULIS = new Array;	
+				var titre = "";
+				var controle = true;
+	
+			//Récupère le résultat 
+			for (i = 0; i < result_ULIS.results.length; i++){
+				if (result_ULIS.results[i]["type_handicap_principal"] == handicap_ulis && result_ULIS.results[i]["departement"] == dep){
+					nom_ULIS.push(result_ULIS.results[i]["nom"]);
+					adresse_ULIS.push(result_ULIS.results[i]["adresse"]);
+					commune_ULIS.push(result_ULIS.results[i]["commune"]);
+					typeEtablissement_ULIS.push(result_ULIS.results[i]["type_detablissement"]);
+					CodePostal_ULIS.push(result_ULIS.results[i]["cp"]);
+				}		
+			}	
+		
+			//Création du tableau 
+			var tableau = "";
+			titre += "ÉTABLISSEMENT DANS VOTRE DÉPARTEMENT "; 
+			tableau +=titre;
+			tableau += "<tr><th>Nom</th><th>Type d'établissement</th><th>Adresse</th><th>Commune</th><th>Code Postal</th></tr>";
+		
+			for (i = 0; i < nom_ULIS.length; i++){
+			tableau += "<tr><td>"+nom_ULIS[i]+"</td><td>"+typeEtablissement_ULIS[i]+"</td><td>"+adresse_ULIS[i]+"</td><td>"+commune_ULIS[i]+"</td><td>"+CodePostal_ULIS[i]+"</td></tr>";
+			}
+		
+			// Ajustement HTML
+			var tableauHTML = document.getElementById("tableau_ULIS");
+			tableauHTML.innerHTML=tableau;
+		
+				
+		})})
+		result_ULIS;
+		
+		})})
+		result_Region;
+		
+		
+		
   }
 	
 	
@@ -251,52 +247,7 @@
 		
 		result_MDPH;
 		
-		
-	//API ULIS
-	var result_ULIS;
-	var region = "Occitanie" 
-	fetch('https://api.opendata.onisep.fr/api/1.0/dataset/57e13d4faa63e/search?size=1000&facet.region=Occitanie')
-	  .then(function(response) {
-	    response.json()
-		.then(function(data) {
-	    console.log('ok'); 
-	result_ULIS=data;
-	
-	var nom_ULIS = new Array;
-	var adresse_ULIS = new Array;
-	var commune_ULIS = new Array;
-	var CodePostal_ULIS = new Array;
-	
-		//Récupère le résultat 
-	for (i in result_ULIS){
-		if (result_ULIS.results[i]["type_handicap_principal"] == handicap_ulis && result_ULIS.results[i]["departement"] == dep){
-		nom_ULIS.push(result_ULIS.results[i]["nom"]);
-		adresse_ULIS.push(result_ULIS.results[i]["adresse"]);
-		commune_ULIS.push(result_ULIS.results[i]["commune"]);
-		CodePostal_ULIS.push(result_ULIS.results[i]["cp"]);
-		
-		}
-	};
-	
-	// Création du tableau ULIS 
-	var tableau = "";
-	var titre = "<table> <tr> <th>Nom</th> <th>Adresse</th> <th>Code Postal</th> <th>Commune</th> </tr>";
-	tableau += titre;
-		    
-	for (i in nom_ULIS){ 
-		var ligne = "<tr> <td>"+nom_ULIS[i]+"</td> <td>"+adresse_ULIS[i]+"</td> <td>"+CodePostal_ULIS[i]+"</td> <td>"+commune_ULIS[i]+"</td> </tr>";
-		tableau += ligne; 
-	}
-	tableau += "</table>";
-	
-	// Ajout dans le HTML 
-	var tableau_ULIS = document.getElementById("tableau_ULIS");
-	tableau_ULIS.innerHTML=tableau; 
-	
-	
-	  })})
-	result_ULIS;	
-	
+			
 	</script>
 	
 </html>
