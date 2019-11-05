@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<title>PROJET API</title>
 	</head>
@@ -124,7 +125,11 @@
 		    
 		    for (i in nom){ // Pour chaque département.
 			   //console.log(nom[i]);
-			    text = text + "<tr><td>"+nom[i]+"</td><td>"+adresse[i]+"</td><td>"+cp[i]+"</td><td>"+commune[i]+"</td><td>"+lien[i]+"</td></tr>"; 
+			   if(cp[i] < 10000){
+			    text = text + "<tr><td>"+nom[i]+"</td><td>"+adresse[i]+"</td><td>"+'0' + cp[i]+"</td><td>"+commune[i]+"</td><td><a href=\"" +lien[i]+ "\" > "+lien[i]+" </a> </td></tr>"; 
+				} else {
+			    text = text + "<tr><td>"+nom[i]+"</td><td>"+adresse[i]+"</td><td>"+cp[i]+"</td><td>"+commune[i]+"</td><td><a href=\"" +lien[i]+ "\" > "+lien[i]+" </a> </td></tr>"; 
+			    }
 		    }
 		    //console.log(text);
 		    var donnee_MDPH = document.getElementById("tab_MDPH");
@@ -138,8 +143,14 @@
 		
 		//API REGION
 		  //recupere le code region celon le departement.
+		  dep_temp = parseInt(dep.substring(0, 3));
+		  if (dep_temp >= 100){
+		  	console.log(dep.substring(0, 3));
+		  	var dep_temporaire = dep.substring(0, 3);
+		  }else{
+			var dep_temporaire=dep.substring(0, 2);//variable dep avec deux chiffre pour recherche
+		  }
 		  console.log(dep.substring(0, 2));//on prend le code departement juste les deux chiffre donc on faite une sous chaine de carateres
-		  var dep_temporaire=dep.substring(0, 2);//variable dep avec deux chiffre pour recherche
 		  var result_Region;
 		  fetch('https://geo.api.gouv.fr/departements/'+dep_temporaire+'?fields=nom,code,codeRegion,region')
 		  .then(function(response) {//on recupere le code region selon son code departement
@@ -183,19 +194,29 @@
 			}	
 		
 			//Création du tableau 
+			if (nom_ULIS.length > 0){
 			var tableau = "";
-			titre += "ÉTABLISSEMENT DANS VOTRE DÉPARTEMENT "; 
+			titre += "<h3><b> Établissement dans votre département </b></h3>"; 
 			tableau +=titre;
 			tableau += "<tr><th>Nom</th><th>Type d'établissement</th><th>Adresse</th><th>Commune</th><th>Code Postal</th></tr>";
 		
 			for (i = 0; i < nom_ULIS.length; i++){
+				if(CodePostal_ULIS[i] < 10000){
+				   CodePostal_ULIS[i] =  '0' + CodePostal_ULIS[i];	
+				}
+
 			tableau += "<tr><td>"+nom_ULIS[i]+"</td><td>"+typeEtablissement_ULIS[i]+"</td><td>"+adresse_ULIS[i]+"</td><td>"+commune_ULIS[i]+"</td><td>"+CodePostal_ULIS[i]+"</td></tr>";
 			}
 		
 			// Ajustement HTML
 			var tableauHTML = document.getElementById("tableau_ULIS");
 			tableauHTML.innerHTML=tableau;
-		
+		}
+		else {
+			var tableau = "<h3><b>Il n'y a aucun établissement qui supporte ce(s) handicap(s) dans votre région </b></h3>";
+		}
+		var tableauHTML = document.getElementById("tableau_ULIS");
+			tableauHTML.innerHTML=tableau;
 				
 		})})
 		result_ULIS;
