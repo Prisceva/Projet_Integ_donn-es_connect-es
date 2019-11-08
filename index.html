@@ -1,39 +1,72 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<title>PROJET API</title>
 	</head>
-	<body>
+	<body class="full-height">
+		<br>
+		<div class="body-content full-height">
+		<div class="container full-height">
+			<h2>
+				<b>
+				Intégrations de données de la MDPH
+			</b>
+			</h2>
+			<p>Séléctionnez votre département et le handicap concerné puis cliquez sur 'rechercer'</p>
+			<br>
+			<div class="row no-gutters justify-content-center" style="margin-left: 10%">
+			<div class="col-2">
+				<select class="form-control" id="dep">
+				</select>
+			</div>
+			
+			<div class="col-2">
+				<SELECT class="form-control" name="handicap" id="handicap"> 
+				<OPTION VALUE="visuel">Visuel</OPTION> 
+				<OPTION VALUE="cognitif">Cognitif/Intellectuel</OPTION> 
+				<OPTION VALUE="auditif">Auditif</OPTION> 
+				<OPTION VALUE="moteur">Moteur</OPTION> 
+				<OPTION VALUE="autiste">Autiste</OPTION> 
+				<OPTION VALUE="sante">Santé</OPTION>
+				<OPTION VALUE="apprentissages">Apprentissage</OPTION>
+				<OPTION VALUE="multiple">Multiple</OPTION>
+				</SELECT>
+			</div>
+			<div class="col-3">
+				<button class="btn btn-primary" type="button" onclick="retrouverVarDep()">rechercher</button>	
+			</div>
+		</div>
 
-		<p>test final </p>
+		<br>
+
+			<div class="row">
+		    <table class="table table-bordered table-striped">
+		    	<thead class="thead-dark" id="tab_MDPH">
+		    		
+		    	</thead>
+	    	</table>
+	    </div>
+
+	    <table class="table" id="tab_asso">
+		</table>
 	
-		<select id="dep">
-		</select>
-		
-	<SELECT name="handicap" id="handicap"> 
-	<OPTION VALUE="visuel">Visuel</OPTION> 
-	<OPTION VALUE="cognitif">Cognitif/Intellectuel</OPTION> 
-	<OPTION VALUE="auditif">Auditif</OPTION> 
-	<OPTION VALUE="moteur">Moteur</OPTION> 
-	<OPTION VALUE="autiste">Autiste</OPTION> 
-	<OPTION VALUE="sante">Santé</OPTION>
-	<OPTION VALUE="apprentissages">Apprentissage</OPTION>
-	<OPTION VALUE="multiple">Multiple</OPTION>
-	</SELECT>
-		
-		<button type="button" onclick="retrouverVarDep()">rechercher</button>
-				
-    <table id = "tab_MDPH">
-    </table>
-    
-    <table id="tab_asso">
-	</table>
+		<h3 hidden id="tablo_present"><b> Établissement dans votre département </b></h3>
+		<h3 hidden id="not_tablo"><b>Il n'y a aucun établissement qui supporte ce(s) handicap(s) dans votre région </b></h3>
+		<div class="row">
+		<table class="table table-striped table-bordered">
+			<thead class="thead-dark table-striped" id="tableau_ULIS"></thead>
+	    </table>
+	</div>
+	</div>
+</div>
 	
-	<table id = "tableau_ULIS">
-    </table>
-		
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 	</body>
 	<script type="text/javascript" src="RequeteAsso.js"></script>
 	
@@ -196,8 +229,12 @@
 			//Création du tableau 
 			if (nom_ULIS.length > 0){
 			var tableau = "";
-			titre += "<h3><b> Établissement dans votre département </b></h3>"; 
-			tableau +=titre;
+			titre = document.getElementById("tablo_present");
+			titre.removeAttribute("hidden");
+			titre = document.getElementById("not_tablo");
+			titre.hidden = true;
+			tableauHTML = document.getElementById("tableau_ULIS");
+			tableauHTML.hidden = false;
 			tableau += "<tr><th>Nom</th><th>Type d'établissement</th><th>Adresse</th><th>Commune</th><th>Code Postal</th></tr>";
 		
 			for (i = 0; i < nom_ULIS.length; i++){
@@ -213,7 +250,12 @@
 			tableauHTML.innerHTML=tableau;
 		}
 		else {
-			var tableau = "<h3><b>Il n'y a aucun établissement qui supporte ce(s) handicap(s) dans votre région </b></h3>";
+			titre = document.getElementById("not_tablo");
+			titre.removeAttribute("hidden");
+			titre = document.getElementById("tablo_present");
+			titre.hidden = true;
+			tableauHTML = document.getElementById("tableau_ULIS");
+			tableauHTML.hidden = true;
 		}
 		var tableauHTML = document.getElementById("tableau_ULIS");
 			tableauHTML.innerHTML=tableau;
