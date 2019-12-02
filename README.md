@@ -1,17 +1,19 @@
-# Projet_Integ_donnees_connectees
-Integration de données connectées : Groupe de Sarah, Michail, Fleur, Gaëlle, Priscille
+# HandiHelp
+## Faciliter l’insertion des personnes atteintes de handicap
 
-Lien vers le site : https://prisceva.github.io/Projet_Integ_donnees_connectees/
+Ce site a pour but de permettre aux personnes atteintes de handicap d’accéder facilement aux coordonnées des MDPH (Maisons Départementales de Personnes Handicapées) de leur Département. De plus, le site HandiHelp permet, à partir d’un département et d’un handicap, de localiser les différentes associations adaptées ainsi que les établissement scolaires ULIS (Unités Localisées d’Inclusion Scolaire de l’Enseignement Secondaire) prenant en charge ce type de handicap.
 
-Objectif :
-Faciliter la vie et la socialisation des personnes atteintes de handicap.
-Pour cela, nous allons proposer un site permettant aux personnes porteuses de handicap de trouver les associations et
-écoles adaptées ainsi que les coordonées des maisons départementales de personnes handicapées. 
+Lien vers le site : https://prisceva.github.io/Projet_Integ_donnees_connectees/ 
 
-API 1 : MAISONS DÉPARTEMENTALES DE PERSONNES HANDICAPÉES
-API 2 : ASSOCIATIONS DE PERSONNES HANDICAPÉES
-API 3 : UNITÉS LOCALISÉES D'INCLUSION SCOLAIRE (ULIS) DE L'ENSEIGNEMENT SECONDAIRE 
+Pour réaliser ce site, quatre API de l’ONISEP ont été utilisées : 
 
-Sources : ONISEP 
-http://opendata.onisep.fr/2-les-donnees.htm
+API 1 : Maisons Départementales de Personnes Handicapées
+API 2 : Associations de personnes handicapées
+API 3 : Unités Localisées d’Inclusion Scolaire (ULIS) de l’Enseignement Secondaire
+API 4 : Géographie – Pour le lien Région / Département
 
+L’objectif a ici été de lier les différentes API en faisant le lien entre les Départements et les Régions afin d’avoir un accès aux données par Département. Il a également été nécessaire de lier les différents types de handicap présents dans les API « Associations de Personnes Handicapées » et « ULIS », ceux-ci étant différents dans chacune des API. 
+
+Lien vers la source de données : http://opendata.onisep.fr/2-les-donnees.htm
+
+Groupe projet : Michail BERJAOUI, Fleur BRUN, Priscille FRANC, Gaëlle NOVALES et Sarah RAMIREZ
